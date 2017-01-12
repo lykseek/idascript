@@ -4,6 +4,6 @@ start=0x7548D000;
 end=0x754d4000;
 for (i=start;i<end;i++)
 {
-  fputs(Byte(i),f);
+  fputc(Byte(i),f);
 }
 fclose(f);
