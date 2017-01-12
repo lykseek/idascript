@@ -1,0 +1,67 @@
+auto rsp,rfunc,rfuncaddr;
+rsp=GetRegValue("SP");
+rfunc=rsp+8;
+rfuncaddr=Dword(rfunc);
+Message("%x\n",rfuncaddr);
+if (rfuncaddr > 0x60000000)
+PauseProcess();
+
+
+
+auto va;
+va = GetRegValue("R12");
+Message("%x\n",va);
+if ( va > 0x75000000)
+PauseProcess();
+
+虚拟机入口
+auto f,va;
+f = fopen("E:\\workspace\\nothing\\wps\\trace.txt","ab+");
+va = GetRegValue("R0");
+Message("id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fprintf(f,"id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fclose(f);
+
+
+虚拟机入口,检索所有小于10的
+auto f,va;
+va = GetRegValue("R0");
+if (va < 10){
+f = fopen("E:\\workspace\\nothing\\wps\\trace_less_10.txt","ab+");
+Message("id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fprintf(f,"id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fclose(f);
+
+}
+
+
+虚拟机入口,去除所有无效的块
+auto f,va;
+va = GetRegValue("R0");
+if (va < 10){
+f = fopen("E:\\workspace\\nothing\\wps\\trace_less_10.txt","ab+");
+Message("id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fprintf(f,"id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fclose(f);
+
+}
+
+
+虚拟机实际跳转地址
+auto f,va,r0;
+f = fopen("E:\\workspace\\nothing\\wps\\trace1.txt","ab+");
+va = GetRegValue("SP");
+r0 = GetRegValue("R0");
+fprintf(f,"id=%x, r0=%x,virAddr=%x\n",GetCurrentThreadId(),r0,Dword(va+8));
+fclose(f);
+
+
+检举有用代码
+auto f,va;
+auto code;
+f = fopen("E:\\workspace\\nothing\\wps\\code.txt","ab+");
+va = GetRegValue("R0");
+code = GetDisasm(ea);
+Message("id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fprintf(f,"id=%x, r0=%x\n",GetCurrentThreadId(),va);
+fclose(f);
